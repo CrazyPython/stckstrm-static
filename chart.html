@@ -178,7 +178,7 @@ xhttp.onreadystatechange = function () {
   }
 };
 
-xhttp.open("GET", "https://www.quandl.com/api/v3/datasets/EOD/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW", true);
+xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/EOD/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
 xhttp.send();
   </script>
 
