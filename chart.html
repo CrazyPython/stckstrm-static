@@ -27,12 +27,21 @@
 
 <body translate="no" >
 
+ <div class="preloader-wrapper small active" id="loader" style="top: 50%; left: 50%; position: absolute;">
+    <div class="spinner-layer spinner-green-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+        
   <script src="https://cdn.rawgit.com/chartjs/chartjs.github.io/master/dist/2.6.0/Chart.bundle.js">
 </script>
 <script src="https://cdn.rawgit.com/chartjs/chartjs.github.io/master/samples/2.6.0/utils.js"></script>
-
-  <canvas id="canvas"></canvas>
-  
   <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js'></script>
 
     <script>
@@ -94,89 +103,70 @@ var config = {
   }
 };
 
-window.onload = function () {
+
+function loadChart() {
+  
+  var element = document.createElement("canvas")
+  element.id= "canvas"
+  document.getElementsByTagName("body")[0].appendChild(element)
   var ctx = document.getElementById("canvas").getContext("2d");
   window.myLine = new Chart(ctx, config);
+  document.getElementById("loader").remove();
 };
 
-(function () {
-  if (typeof Object.defineProperty === 'function') {
-    try {
-      Object.defineProperty(Array.prototype, 'sortBy', { value: sb });
-    } catch (e) {}
+(function(){
+  if (typeof Object.defineProperty === 'function'){
+    try{Object.defineProperty(Array.prototype,'sortBy',{value:sb}); }catch(e){}
   }
   if (!Array.prototype.sortBy) Array.prototype.sortBy = sb;
 
-  function sb(f) {
-    for (var i = this.length; i;) {
+  function sb(f){
+    for (var i=this.length;i;){
       var o = this[--i];
-      this[i] = [].concat(f.call(o, o, i), o);
+      this[i] = [].concat(f.call(o,o,i),o);
     }
-    this.sort(function (a, b) {
-      for (var i = 0, len = a.length; i < len; ++i) {
-        if (a[i] != b[i]) return a[i] < b[i] ? -1 : 1;
+    this.sort(function(a,b){
+      for (var i=0,len=a.length;i<len;++i){
+        if (a[i]!=b[i]) return a[i]<b[i]?-1:1;
       }
       return 0;
     });
-    for (var i = this.length; i;) {
-      this[--i] = this[i][this[i].length - 1];
+    for (var i=this.length;i;){
+      this[--i]=this[i][this[i].length-1];
     }
     return this;
   }
 })();
 
 var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function () {
+xhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
+    loadChart()
     config.data.datasets[0].data = [];
     var labels = [];
-    for (var _iterator = JSON.parse(this.responseText)["dataset"]["data"].slice(0, daysback), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-      var _ref;
-
-      if (_isArray) {
-        if (_i >= _iterator.length) break;
-        _ref = _iterator[_i++];
-      } else {
-        _i = _iterator.next();
-        if (_i.done) break;
-        _ref = _i.value;
-      }
-
-      var k = _ref;
-
+    for (let k of JSON.parse(this.responseText)["dataset"]["data"].slice(
+      0,
+      daysback
+    )) {
       console.log(k[1]);
       config.data.datasets[0].data.push(k[1]);
       //var date = config.data.labels.push(k[0]);
       //moment("date", "YYYY-MM-DD").fromNow();
       labels.push(k[0]);
+      
     }
     config.data.datasets[0].data = config.data.datasets[0].data.sort();
-    labels = labels.sort(function (a, b) {
-      console.log(a);
-      return new Date(b.date) - new Date(a.date);
+    labels = labels.sort(function(a, b) {
+   return new Date(b.date) - new Date(a.date);
     });
-    labels.sortBy(function (o) {
-      return o;
-    });
-    for (var _iterator2 = labels, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-      var _ref2;
-
-      if (_isArray2) {
-        if (_i2 >= _iterator2.length) break;
-        _ref2 = _iterator2[_i2++];
-      } else {
-        _i2 = _iterator2.next();
-        if (_i2.done) break;
-        _ref2 = _i2.value;
-      }
-
-      var label = _ref2;
-
+    labels.sortBy(function(o){ return o });
+    for (let label of labels) {
       config.data.labels.push(moment(label, "YYYY-MM-DD").format('MMMM Do'));
     }
     window.myLine.update();
+    document.getElementById("canvas").className += "visiblecanvas"
   }
-};
+}
 
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
 xhttp.send();
