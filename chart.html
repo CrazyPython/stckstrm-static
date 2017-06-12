@@ -133,8 +133,9 @@ var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     var parsed = JSON.parse(this.responseText)
+    console.log(parsed)
     if (parsed["dataset"] === undefined) {
-      document.getElementsByTagName("body").innerHTML = "<center>No data found \xF0\x9F\x98\x85</center>"
+      document.getElementsByTagName("body")[0].innerHTML = "<center>No data found \xF0\x9F\x98\x85</center>"
       return; 
     }
     loadChart()
