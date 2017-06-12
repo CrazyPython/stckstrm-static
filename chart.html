@@ -20,7 +20,6 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js'></script>
 
     <script id="firstScript">
-    "use strict";
       
 
 function getJsonFromUrl() {
@@ -33,7 +32,7 @@ function getJsonFromUrl() {
   return result;
 }
 var f = getJsonFromUrl();
-    var stock = f['stock'];
+var stock = f['stock'];
 var daysback = f['daysback'];
 var config = {
   type: "line",
