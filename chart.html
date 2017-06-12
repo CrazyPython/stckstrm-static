@@ -19,7 +19,7 @@
 <script src="https://cdn.rawgit.com/chartjs/chartjs.github.io/master/samples/2.6.0/utils.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js'></script>
 
-    <script>
+    <script id="firstScript">
     "use strict";
       
 
@@ -156,9 +156,11 @@ xhttp.onreadystatechange = function() {
 
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
 xhttp.send();
-      
+</script>
+      <script>
 
       function reload(stock) {
+        
  document.getElementsByTagName("body")[0].innerHTML = ' <div class="preloader-wrapper small active" id="loader" style="top: 50%; left: 50%; position: absolute;"> \
     <div class="spinner-layer spinner-green-only"> \
       <div class="circle-clipper left"> \
@@ -170,6 +172,16 @@ xhttp.send();
       </div> \
     </div> \
   </div>'
+        var scriptTag = document.getElementById("firstScript");
+var head = document.getElementsByTagName('head')[0];
+head.appendChild(scriptTag);
+
+    head.removeChild(scriptTag);
+    var newScriptTag = document.createElement('script');
+        newScriptTag.id = "firstScript"
+    newScriptTag.innerText = scriptTag.innerText;
+    head.appendChild(newScriptTag);
+    scriptTag = newScriptTag;    
   
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
 xhttp.send();
