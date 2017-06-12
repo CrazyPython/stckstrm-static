@@ -119,8 +119,28 @@ xhttp.onreadystatechange = function() {
   try {
   if (this.readyState == 4 && this.status == 200) {
         var parsed = JSON.parse(this.responseText);
-    loadChart();
+
+    config.data.datasets[0].data = [];
+    var labels = [];
+    for (let k of parsed["dataset"]["data"].slice(
+      0,
+      daysback
+    )) {
+      config.data.datasets[0].data.push(k[1]);
+      labels.push(k[0]);
+      
+    }
+    config.data.datasets[0].data = config.data.datasets[0].data.sort();
+    labels = labels.sort(function(a, b) {
+   return new Date(b.date) - new Date(a.date);
+    });
+    labels.sortBy(function(o){ return o });
+    for (let label of labels) {
+      config.data.labels.push(moment(label, "YYYY-MM-DD").format('MMMM Do'));
+    }
+        loadChart();
     
+       var data2= config.data.datasets[0].data;
 var stock = f['stock'];
 var daysback = f['daysback'];
 var config = {
@@ -131,7 +151,7 @@ var config = {
       label: stock,
         backgroundColor: "#ffffff",
         borderColor: "#16161d",
-      data: [],
+      data: data2,
       fill: false
     }]
   },
@@ -170,26 +190,9 @@ var config = {
         window.myLine.destroy();
 document.getElementById('canvas').remove();var para = document.createElement("canvas");para.id= 'canvas';
 document.getElementsByTagName('body')[0].append(para);
-window.myLine = new Chart(document.getElementById('canvas'), config);
-    config.data.datasets[0].data = [];
-    var labels = [];
-    for (let k of parsed["dataset"]["data"].slice(
-      0,
-      daysback
-    )) {
-      config.data.datasets[0].data.push(k[1]);
-      labels.push(k[0]);
-      
-    }
-    config.data.datasets[0].data = config.data.datasets[0].data.sort();
-    labels = labels.sort(function(a, b) {
-   return new Date(b.date) - new Date(a.date);
-    });
-    labels.sortBy(function(o){ return o });
-    for (let label of labels) {
-      config.data.labels.push(moment(label, "YYYY-MM-DD").format('MMMM Do'));
-    }
-    window.myLine.update();
+window.myLine = new Chart(document.getElementById('canvas').getContext("2d"), config);
+    
+    //window.myLine.update();
     document.getElementById("canvas").className += "visiblecanvas"
   }
   }
