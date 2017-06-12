@@ -170,7 +170,7 @@ var config = {
         window.myLine.destroy();
 document.getElementById('canvas').remove();var para = document.createElement("canvas");para.id= 'canvas';
 document.getElementsByTagName('body')[0].append(para);
-window.myLine = new Chart($("#" + 'canvas'), config);
+window.myLine = new Chart(document.getElementById('canvas'), config);
     config.data.datasets[0].data = [];
     var labels = [];
     for (let k of parsed["dataset"]["data"].slice(
