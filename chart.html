@@ -131,9 +131,9 @@ function loadChart() {
 
 var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
-  console.log(parsed)
+    var parsed = JSON.parse(this.responseText)
     if (parsed === undefined) {
-      document.getElementsByTagName("body")[0].innerHTML = "<center>No data found \xF0\x9F\x98\x85</center>"
+      document.getElementsByTagName("body")[0].innerHTML = "<center>No data found...</center>"
       return; 
     }
   if (this.readyState == 4 && this.status == 200) {
