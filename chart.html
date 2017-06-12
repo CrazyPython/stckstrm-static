@@ -168,7 +168,7 @@ var config = {
   }
 };
         window.myLine.destroy();
-document.getElementById('canvas').remove();var para = document.createElement("canvas");para.id= 'canvas'
+document.getElementById('canvas').remove();var para = document.createElement("canvas");para.id= 'canvas';
 document.getElementsByTagName('body')[0].append(para);
 window.myLine = new Chart($("#" + 'canvas'), config);
     config.data.datasets[0].data = [];
@@ -225,9 +225,9 @@ head.appendChild(scriptTag);
 
     head.removeChild(scriptTag);
     var newScriptTag = document.createElement('script');
-        newScriptTag.id = "firstScript"
+        newScriptTag.id = "firstScript";
     newScriptTag.innerText = scriptTag.innerText;
-    config.data.datasets[0].data = []
+    config.data.datasets[0].data = [];
     head.appendChild(newScriptTag);
     scriptTag = newScriptTag;    
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
