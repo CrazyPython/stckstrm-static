@@ -32,7 +32,7 @@ function getJsonFromUrl() {
   });
   return result;
 }
-var f = getJsonFromUrl()
+var f = getJsonFromUrl();
     var stock = f['stock'];
 var daysback = f['daysback'];
 var config = {
@@ -83,9 +83,9 @@ var config = {
 
 function loadChart() {
   
-  var element = document.createElement("canvas")
-  element.id= "canvas"
-  document.getElementsByTagName("body")[0].appendChild(element)
+  var element = document.createElement("canvas");
+  element.id= "canvas";
+  document.getElementsByTagName("body")[0].appendChild(element);
   var ctx = document.getElementById("canvas").getContext("2d");
   window.myLine = new Chart(ctx, config);
   document.getElementById("loader").style.display= "none";
@@ -93,7 +93,7 @@ function loadChart() {
 
 (function(){
   if (typeof Object.defineProperty === 'function'){
-    try{Object.defineProperty(Array.prototype,'sortBy',{value:sb}); }catch(e){}
+    try{Object.defineProperty(Array.prototype,'sortBy',{value:sb}); }catch(e){};
   }
   if (!Array.prototype.sortBy) Array.prototype.sortBy = sb;
 
@@ -119,8 +119,8 @@ var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
   try {
   if (this.readyState == 4 && this.status == 200) {
-        var parsed = JSON.parse(this.responseText)
-    loadChart()
+        var parsed = JSON.parse(this.responseText);
+    loadChart();
     config.data.datasets[0].data = [];
     var labels = [];
     for (let k of parsed["dataset"]["data"].slice(
