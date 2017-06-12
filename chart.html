@@ -160,7 +160,7 @@ xhttp.send();
 
       function reload(stock) {
   document.getElementById("loader").style.display= "default";
- var ele =  document.getElementByTagName("body")[0].innerHTML = ' <div class="preloader-wrapper small active" id="loader" style="top: 50%; left: 50%; position: absolute;"> \
+ document.getElementByTagName("body")[0].innerHTML = ' <div class="preloader-wrapper small active" id="loader" style="top: 50%; left: 50%; position: absolute;"> \
     <div class="spinner-layer spinner-green-only"> \
       <div class="circle-clipper left"> \
         <div class="circle"></div> \
@@ -171,10 +171,7 @@ xhttp.send();
       </div> \
     </div> \
   </div>'
-        
- if (ele != null) {
-   ele.remove()
- }
+  
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
 xhttp.send();
       
