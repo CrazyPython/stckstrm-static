@@ -177,7 +177,10 @@ xhttp.send();
 
       function reload(stock) {
   document.getElementById("loader").style.display= "default";
-
+ var ele =  document.getElementById("canvas")
+ if (ele !== undefined) {
+   ele.remove() 
+ }
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
 xhttp.send();
       
