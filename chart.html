@@ -175,9 +175,9 @@ head.appendChild(scriptTag);
     var newScriptTag = document.createElement('script');
         newScriptTag.id = "firstScript"
     newScriptTag.innerText = scriptTag.innerText;
+    config.data.datasets[0].data = []
     head.appendChild(newScriptTag);
     scriptTag = newScriptTag;    
-  
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
 xhttp.send();
       
