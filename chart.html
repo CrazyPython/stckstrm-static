@@ -14,23 +14,7 @@
 
   </style>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-</head>
-
-<body translate="no" >
-
- <div class="preloader-wrapper small active" id="loader" style="top: 50%; left: 50%; position: absolute;">
-    <div class="spinner-layer spinner-green-only">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
-      </div>
-    </div>
-  </div>
-        
-  <script src="https://cdn.rawgit.com/chartjs/chartjs.github.io/master/dist/2.6.0/Chart.bundle.js">
+    <script src="https://cdn.rawgit.com/chartjs/chartjs.github.io/master/dist/2.6.0/Chart.bundle.js">
 </script>
 <script src="https://cdn.rawgit.com/chartjs/chartjs.github.io/master/samples/2.6.0/utils.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js'></script>
@@ -143,7 +127,6 @@ xhttp.onreadystatechange = function() {
       0,
       daysback
     )) {
-      console.log(k[1]);
       config.data.datasets[0].data.push(k[1]);
       //var date = config.data.labels.push(k[0]);
       //moment("date", "YYYY-MM-DD").fromNow();
@@ -177,9 +160,20 @@ xhttp.send();
 
       function reload(stock) {
   document.getElementById("loader").style.display= "default";
- var ele =  document.getElementById("canvas")
+ var ele =  document.getElementByTagName("body")[0].innerHTML = ' <div class="preloader-wrapper small active" id="loader" style="top: 50%; left: 50%; position: absolute;"> \
+    <div class="spinner-layer spinner-green-only"> \
+      <div class="circle-clipper left"> \
+        <div class="circle"></div> \
+      </div><div class="gap-patch"> \
+        <div class="circle"></div> \
+      </div><div class="circle-clipper right"> \
+        <div class="circle"></div> \
+      </div> \
+    </div> \
+  </div>'
+        
  if (ele != null) {
-   ele.remove() 
+   ele.remove()
  }
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
 xhttp.send();
@@ -196,6 +190,23 @@ xhttp.send();
 
   
   
+
+</head>
+
+<body translate="no" >
+
+ <div class="preloader-wrapper small active" id="loader" style="top: 50%; left: 50%; position: absolute;">
+    <div class="spinner-layer spinner-green-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+        
 
 </body>
 </html>
