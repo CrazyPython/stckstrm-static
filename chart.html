@@ -167,6 +167,57 @@ xhttp.send();*/
       </div> \
     </div> \
   </div>'
+var stock = f['stock'];
+var daysback = f['daysback'];
+var config = {
+  type: "line",
+  data: {
+    labels: [],
+    datasets: [{
+      label: stock,
+        backgroundColor: "#ffffff",
+        borderColor: "#16161d",
+      data: [],
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true,
+    title: {
+      display: false,
+      text: stock
+    },
+    tooltips: {
+      mode: "index",
+      intersect: false
+    },
+    hover: {
+      mode: "nearest",
+      intersect: true
+    },
+    scales: {
+      xAxes: [{
+        display: true,
+        scaleLabel: {
+          display: false,
+          labelString: "Month"
+        }
+      }],
+      yAxes: [{
+        display: true,
+        scaleLabel: {
+          display: false,
+          labelString: "Price"
+        }
+      }]
+    }
+  }
+};
+        window.myLine.destroy();
+document.getElementById('canvas').remove();var para = document.createElement("canvas");para.id= 'canvas'
+document.getElementsByTagName('body')[0].append(para);
+window.myLine = new Chart($("#" + 'canvas'), config);
+
         var scriptTag = document.getElementById("firstScript");
 var head = document.getElementsByTagName('head')[0];
 head.appendChild(scriptTag);
