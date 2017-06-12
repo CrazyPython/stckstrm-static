@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <META HTTP-EQUIV='Content-Security-Policy' CONTENT="default-src https:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'">
+  <META HTTP-EQUIV='Content-Security-Policy' CONTENT="default-src https:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'" />
   <meta charset="UTF-8">
       <style>
       canvas {
@@ -104,7 +104,7 @@ function loadChart() {
   document.getElementsByTagName("body")[0].appendChild(element)
   var ctx = document.getElementById("canvas").getContext("2d");
   window.myLine = new Chart(ctx, config);
-  document.getElementById("loader").remove();
+  document.getElementById("loader").style.display= "none";
 };
 
 (function(){
@@ -164,7 +164,7 @@ xhttp.onreadystatechange = function() {
   }
     catch(err) {
       
-      document.getElementsByTagName("body")[0].innerHTML = "<center>No data found...</center>"
+      //document.getElementsByTagName("body")[0].innerHTML = "<center>No data found...</center>"
       return; 
     
     }
@@ -176,6 +176,8 @@ xhttp.send();
       
 
       function reload(stock) {
+  document.getElementById("loader").style.display= "default";
+        document.getElementById("chart").remove()
 
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
 xhttp.send();
