@@ -127,8 +127,6 @@ xhttp.onreadystatechange = function() {
       daysback
     )) {
       config.data.datasets[0].data.push(k[1]);
-      //var date = config.data.labels.push(k[0]);
-      //moment("date", "YYYY-MM-DD").fromNow();
       labels.push(k[0]);
       
     }
@@ -145,9 +143,7 @@ xhttp.onreadystatechange = function() {
   }
   }
     catch(err) {
-      
-      //document.getElementsByTagName("body")[0].innerHTML = "<center>No data found...</center>"
-      return; 
+            return; 
     
     }
 }
