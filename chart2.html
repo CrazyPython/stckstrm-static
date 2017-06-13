@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  
+  
+  
+      <style>
+      canvas {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+         height:100vh;
+  width:100vw;
+}
+
+
+  
+  
+  .showbox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5%;
+}
+
+.loader {
+  position: relative;
+  margin: 0 auto;
+  width: 100px;
+}
+.loader:before {
+  content: '';
+  display: block;
+  padding-top: 100%;
+}
+
+.circular {
+  -webkit-animation: rotate 2s linear infinite;
+          animation: rotate 2s linear infinite;
+  height: 100%;
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.path {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+          animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+@-webkit-keyframes color {
+  100%,
+  0% {
+    stroke: #d62d20;
+  }
+  40% {
+    stroke: #0057e7;
+  }
+  66% {
+    stroke: #008744;
+  }
+  80%,
+  90% {
+    stroke: #ffa700;
+  }
+}
+@keyframes color {
+  100%,
+  0% {
+    stroke: #d62d20;
+  }
+  40% {
+    stroke: #0057e7;
+  }
+  66% {
+    stroke: #008744;
+  }
+  80%,
+  90% {
+    stroke: #ffa700;
+  }
+}
+
+      </style>
+
+</head>
+
+<body translate="no" >
+
+
+      <div class="showbox" id="loader">
+  <div class="loader">
+    <svg class="circular" viewox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+    </svg>
+  </div>
+</div>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <script src="https://cdn.rawgit.com/chartjs/chartjs.github.io/master/dist/2.6.0/Chart.bundle.js">
+</script>
+<script src="https://cdn.rawgit.com/chartjs/chartjs.github.io/master/samples/2.6.0/utils.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js'></script>
+
+    <script>
+    "use strict";
+function getJsonFromUrl() {
+  var query = location.search.substr(1);
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+var f = getJsonFromUrl()
+    var stock = f['stock'];
+var daysback = f['daysback'];
+var config = {
+  type: "line",
+  data: {
+    labels: [],
+    datasets: [{
+      label: stock,
+        backgroundColor: "#ffffff",
+        borderColor: "#16161d",
+      data: [],
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true,
+    title: {
+      display: false,
+      text: stock
+    },
+    tooltips: {
+      mode: "index",
+      intersect: false
+    },
+    hover: {
+      mode: "nearest",
+      intersect: true
+    },
+    scales: {
+      xAxes: [{
+        display: true,
+        scaleLabel: {
+          display: false,
+          labelString: "Month"
+        }
+      }],
+      yAxes: [{
+        display: true,
+        scaleLabel: {
+          display: false,
+          labelString: "Price"
+        }
+      }]
+    }
+  }
+};
+
+
+function loadChart() {
+  
+  var element = document.createElement("canvas")
+  element.id= "canvas"
+  document.getElementsByTagName("body")[0].appendChild(element)
+  var ctx = document.getElementById("canvas").getContext("2d");
+  window.myLine = new Chart(ctx, config);
+  document.getElementById("loader").remove();
+};
+
+(function(){
+  if (typeof Object.defineProperty === 'function'){
+    try{Object.defineProperty(Array.prototype,'sortBy',{value:sb}); }catch(e){}
+  }
+  if (!Array.prototype.sortBy) Array.prototype.sortBy = sb;
+
+  function sb(f){
+    for (var i=this.length;i;){
+      var o = this[--i];
+      this[i] = [].concat(f.call(o,o,i),o);
+    }
+    this.sort(function(a,b){
+      for (var i=0,len=a.length;i<len;++i){
+        if (a[i]!=b[i]) return a[i]<b[i]?-1:1;
+      }
+      return 0;
+    });
+    for (var i=this.length;i;){
+      this[--i]=this[i][this[i].length-1];
+    }
+    return this;
+  }
+})();
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    loadChart()
+    config.data.datasets[0].data = [];
+    var labels = [];
+    for (let k of JSON.parse(this.responseText)["dataset"]["data"].slice(
+      0,
+      daysback
+    )) {
+      console.log(k[1]);
+      config.data.datasets[0].data.push(k[1]);
+      //var date = config.data.labels.push(k[0]);
+      //moment("date", "YYYY-MM-DD").fromNow();
+      labels.push(k[0]);
+      
+    }
+    config.data.datasets[0].data = config.data.datasets[0].data.sort();
+    labels = labels.sort(function(a, b) {
+   return new Date(b.date) - new Date(a.date);
+    });
+    labels.sortBy(function(o){ return o });
+    for (let label of labels) {
+      config.data.labels.push(moment(label, "YYYY-MM-DD").format('MMMM Do'));
+    }
+    window.myLine.update();
+    document.getElementById("canvas").className += "visiblecanvas"
+  }
+}
+
+xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
+xhttp.send();
+  </script>
+
+  
+  
+
+</body>
+</html>
+ 
