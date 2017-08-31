@@ -195,6 +195,7 @@
     </div>
         
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 
   <script src="https://cdn.rawgit.com/chartjs/chartjs.github.io/master/dist/2.6.0/Chart.bundle.js">
 </script>
@@ -215,6 +216,21 @@ function getJsonFromUrl() {
 var f = getJsonFromUrl()
     var stock = f['stock'];
 var daysback = f['daysback'];
+new TradingView.widget({
+  "autosize": true,
+  "symbol": "NASDAQ:"+stock,
+  "interval": "W",
+  "timezone": "exchange",
+  "theme": "Dark",
+  "style": "2",
+  "locale": "en",
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "withdateranges": true,
+  "save_image": false,
+  "hideideas": true
+});
+      /*
 var config = {
   type: "line",
   data: {
@@ -325,7 +341,7 @@ xhttp.onreadystatechange = function() {
   }
 }
 xhttp.open("GET", "https://ssappquandlbackend.glitch.me/?url=+"+encodeURIComponent("https://www.quandl.com/api/v3/datasets/WIKI/"+stock+"?granularity=daily&api_key=yvbwpmxTwWCCzmfsBuAW"), true);
-xhttp.send();
+xhttp.send();*/
   </script>
 
   
